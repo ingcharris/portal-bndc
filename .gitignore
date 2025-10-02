@@ -1,0 +1,149 @@
+############################
+# 📦 Dependencias y builds
+############################
+node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+!.yarn/cache
+!.yarn/unplugged
+.next/
+.out/
+.build/
+dist/
+build/
+lib-cov
+lcov.info
+
+############################
+# 🔐 Archivos de entorno
+############################
+.env
+.env.*
+!.env.example
+.tsbuildinfo
+.eslintcache
+
+############################
+# 📄 Logs, bases de datos y procesos
+############################
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+*.pid
+pids
+results
+*.sql
+*.sqlite
+*.sqlite3
+
+############################
+# 📦 Archivos empaquetados y binarios
+############################
+*.7z
+*.csv
+*.dat
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.cab
+*.msi
+*.msm
+*.msp
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.seed
+*.so
+*.swo
+*.swp
+*.swn
+*.swm
+*.out
+
+############################
+# ⚙️ Configuración de herramientas y editores
+############################
+.idea/
+nbproject/
+.vscode/
+*.tsbuildinfo
+*.eslintcache
+
+############################
+# 🧪 Cobertura de pruebas
+############################
+coverage/
+
+############################
+# 📦 Strapi (backend)
+############################
+.tmp/
+.cache/
+public/uploads/*
+!public/uploads/.gitkeep
+.strapi/
+.strapi-updater.json
+.strapi-cloud.json
+exports/
+license.txt
+
+############################
+# 🐳 Docker
+############################
+.dockerignore
+docker-compose.override.yml
+
+############################
+# 💻 SO: macOS
+############################
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+.Spotlight-V100
+.Trashes
+._*
+
+############################
+# 💻 SO: Linux
+############################
+*~
+
+############################
+# 💻 SO: Windows
+############################
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+############################
+# 🔐 SSL y llaves
+############################
+*.pem
+ssl/
+
+############################
+# ☁️ Vercel y otros despliegues
+############################
+.vercel/
+
+############################
+# 📜 Archivos de producción innecesarios
+############################
+next-env.d.ts
+node_history

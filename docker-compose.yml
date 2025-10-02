@@ -1,0 +1,72 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres_db
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    ports:
+      - "5032:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - library_network
+
+  # Servicio de Strapi
+  strapi:
+    container_name: strapi_app
+    restart: unless-stopped
+    build:
+      context: ./backend # Directorio donde se encuentra el Dockerfile
+      dockerfile: Dockerfile
+    # Carga las variables de entorno desde el archivo .env
+    env_file:
+      - ./backend/.env
+    volumes:
+      # Monta el código fuente local en el contenedor.
+      # Esto permite el "live reload": cualquier cambio en tu código local
+      # se refleja instantáneamente en el contenedor sin necesidad de reconstruir la imagen.
+      - ./backend:/opt/app
+      # Agrega este volumen para evitar que la carpeta node_modules local
+      # sobreescriba la que está dentro del contenedor.
+      - /opt/app/node_modules
+      # Volumen para persistir archivos que se suban a través de Strapi
+      - strapi_data:/opt/app/public/uploads
+    ports:
+      # Mapea el puerto del contenedor al puerto de tu máquina local
+      - "1337:1337"
+    # Asegura que el servicio de la base de datos se inicie ANTES que Strapi
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - library_network
+
+  pgadmin:
+      image: dpage/pgadmin4:7.8
+      container_name: pgadmin
+      restart: unless-stopped
+      ports:
+        - "5050:80"
+      env_file:
+        - ./.env
+      depends_on:
+        - postgres
+      volumes:
+        - pgadmin_data:/var/lib/pgadmin
+      networks:
+        - library_network
+
+volumes:
+  pgdata:
+  pgadmin_data:
+  strapi_data:
+
+networks:
+  library_network:
+    driver: bridge

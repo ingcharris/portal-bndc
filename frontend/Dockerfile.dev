@@ -1,0 +1,24 @@
+# frontend/Dockerfile.dev
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Instala deps primero para aprovechar la cache
+COPY package*.json ./
+RUN npm ci
+
+# Copia el resto del código
+COPY . .
+
+# Variables públicas (disponibles en dev cuando arranca el server)
+ARG NEXT_PUBLIC_RB_APP_ID
+ARG NEXT_PUBLIC_RB_API_KEY
+ENV NEXT_PUBLIC_RB_APP_ID=$NEXT_PUBLIC_RB_APP_ID
+ENV NEXT_PUBLIC_RB_API_KEY=$NEXT_PUBLIC_RB_API_KEY
+
+EXPOSE 3000
+
+# Para file-watching estable en Docker Desktop (macOS)
+ENV CHOKIDAR_USEPOLLING=true
+
+CMD ["npm", "run", "dev"]
